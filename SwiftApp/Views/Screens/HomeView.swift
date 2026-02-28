@@ -36,7 +36,7 @@ struct HomeView: View {
 
                         Image(systemName: "leaf")
                             .font(.system(size: 30))
-                            .foregroundColor(.purple)
+                            .foregroundColor(.indigo)
                     }
 
                     Text("Courage")
@@ -63,7 +63,7 @@ struct HomeView: View {
                     }
 
                     ProgressView(value: viewModel.progressToNextPlantStage)
-                        .tint(.purple)
+                        .tint(.indigo)
 
                     if viewModel.tasksToNextPlantStage > 0 {
                         Text("\(viewModel.tasksToNextPlantStage) more to grow to the next stage")

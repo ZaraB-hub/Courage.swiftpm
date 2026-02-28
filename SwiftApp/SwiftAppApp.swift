@@ -10,6 +10,8 @@ import SwiftData
 
 
 @main	
+
+
 struct SwiftAppApp: App {
     private let sharedModelContainer: ModelContainer
     private let repository: SwiftDataTaskRepository
@@ -19,7 +21,7 @@ struct SwiftAppApp: App {
     
     init(){
         do {
-            let container = try ModelContainer(for: Task.self) // create db for my task model / Task.self - what do i want to store
+            let container = try ModelContainer(for: Task.self) 
             let repo = SwiftDataTaskRepository(modelContext: container.mainContext)
             let stepGenerator = StepGeneratorService()
 

@@ -38,8 +38,8 @@ struct PrimaryActionButtonLabel: View {
         .background(
             LinearGradient(
                 colors: [
-                    Color.purple.opacity(0.8),
-                    Color.purple.opacity(0.6)
+                    Color.indigo.opacity(0.8),
+                    Color.indigo.opacity(0.6)
                 ],
                 startPoint: .leading,
                 endPoint: .trailing

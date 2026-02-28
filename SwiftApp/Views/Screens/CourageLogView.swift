@@ -25,7 +25,7 @@ struct CourageLogView: View {
                                 .foregroundColor(.secondary)
                             Text(String(format: "%.1f", viewModel.averageReduction))
                                 .font(.title2.weight(.bold))
-                                .foregroundColor(.purple)
+                                .foregroundColor(.indigo)
                         }
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding()
@@ -53,12 +53,22 @@ struct CourageLogView: View {
                 }
 
                 if viewModel.tasks.isEmpty {
-                    Text("No completed tasks yet.")
-                        .font(.subheadline)
-                        .foregroundColor(.secondary)
-                        .padding(.top, 8)
-                    Spacer()
-                } else {
+                                    VStack(alignment: .leading, spacing: 8) {
+                                        Text("Your Courage Log is empty for now.")
+                                            .font(.headline)
+                                            .foregroundColor(.primary)
+
+                                        Text("Complete one small task and it will show up here. Tiny wins count.")
+                                            .font(.subheadline)
+                                            .foregroundColor(.secondary)
+                                    }
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .padding()
+                                    .background(Color.white.opacity(0.92))
+                                    .cornerRadius(16)
+
+                                    Spacer()
+                                }else {
                     List {
                         ForEach(viewModel.tasks) { task in
                             VStack(alignment: .leading, spacing: 10) {
@@ -84,7 +94,7 @@ struct CourageLogView: View {
                                             .foregroundColor(.secondary)
                                         Text("\(task.anxietyBefore)")
                                             .font(.subheadline.weight(.semibold))
-                                            .foregroundColor(.purple)
+                                            .foregroundColor(.indigo)
                                     }
 
                                     HStack(spacing: 4) {
@@ -93,7 +103,7 @@ struct CourageLogView: View {
                                             .foregroundColor(.secondary)
                                         Text(task.anxietyAfter.map(String.init) ?? "—")
                                             .font(.subheadline.weight(.semibold))
-                                            .foregroundColor(.purple)
+                                            .foregroundColor(.indigo)
                                     }
                                 }
 
@@ -125,6 +135,19 @@ struct CourageLogView: View {
                     .listStyle(.plain)
                     .scrollContentBackground(.hidden)
                     .background(Color.clear)
+                                    
+                                                        
+                                            if !viewModel.tasks.contains(where: { task in
+                                                                    guard let reflection = task.reflection else { return false }
+                                                                    return !reflection.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+                                                                }) {
+                                                                    Text("Try adding one short reflection after each task, it helps you notice your progress.")
+                                                                        .font(.footnote)
+                                                                        .foregroundColor(.secondary)
+                                                                        .padding(.top, 4)
+                                                                }
+                                        
+                                    
                 }
             }
             .padding(.horizontal, 24)

@@ -34,7 +34,7 @@ struct ReflectionView: View {
 
                     Text("\(Int(viewModel.anxietyAfter))")
                         .font(.system(size: 48, weight: .bold))
-                        .foregroundColor(.purple)
+                        .foregroundColor(.indigo)
                         .animation(.spring(response: 0.22, dampingFraction: 0.85), value: viewModel.anxietyAfter)
                 }
 

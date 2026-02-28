@@ -115,7 +115,26 @@ struct AnalyticsView: View {
     private var dayCells: [Int?] {
         Array(repeating: nil, count: leadingEmptyDays) + Array(1...numberOfDaysInMonth).map { Optional($0) }
     }
+    
+    private var simpleInsight: String {
+            if completedTasks.isEmpty {
+                return "Every completed task becomes a signal you can learn from. Start with one tiny step today."
+            }
 
+            if currentStreak >= 3 {
+                return "You’re building consistency with a \(currentStreak)-day streak. Keep it alive with one small win today."
+            }
+
+            if averageReduction >= 2 {
+                return "Your tasks are helping: your average anxiety drop is \(String(format: "%.1f", averageReduction)) points. Repeat the type of step that worked most recently."
+            }
+
+            if totalImpact > 0 {
+                return "Your anxiety has dropped by \(totalImpact) total points so far. Small steps are adding up."
+            }
+
+            return "Progress is still progress. Try one easier task today to build momentum."
+        }
     var body: some View {
         ZStack {
             AppBackground()
@@ -124,7 +143,14 @@ struct AnalyticsView: View {
                 VStack(alignment: .leading, spacing: 16) {
                     Text("Analytics")
                         .font(.system(size: 34, weight: .bold))
+                    
+                    Text(completedTasks.isEmpty
+                                             ? "No entries yet. One small completed task unlocks your first pattern."
+                                             : "These numbers are here to guide, not judge. Small progress still counts.")
+                                            .font(.subheadline)
+                                            .foregroundColor(.secondary)
 
+                                        insightCard
                     LazyVGrid(columns: columns, spacing: 12) {
                         metricCard(
                             title: "Current Streak",
@@ -137,22 +163,22 @@ struct AnalyticsView: View {
                             title: "Tasks Completed",
                             value: "\(completedTasks.count)",
                             icon: "checkmark.seal.fill",
-                            tint: .purple
+                            tint: .indigo
                         )
 
                         metricCard(
                             title: "Avg Reduction",
                             value: String(format: "%.1f", averageReduction),
                             icon: "arrow.down.circle.fill",
-                            tint: .purple
+                            tint: .indigo
                         )
 
-                        metricCard(
-                            title: "Longest Streak",
-                            value: "\(longestStreak)",
-                            icon: "bolt.fill",
-                            tint: .yellow
-                        )
+                      //  metricCard(
+                        //    title: "Longest Streak",
+                          //  value: "\(longestStreak)",
+                         //   icon: "bolt.fill",
+                          //  tint: .yellow
+                       // )
 
                         metricCard(
                             title: "Total Impact",
@@ -196,12 +222,31 @@ struct AnalyticsView: View {
         .background(Color.white.opacity(0.9))
         .cornerRadius(16)
     }
+    
+    private var insightCard: some View {
+            VStack(alignment: .leading, spacing: 10) {
+                HStack(spacing: 8) {
+                    Image(systemName: "sparkles")
+                        .foregroundColor(.indigo)
+                    Text("Today’s Insight")
+                        .font(.headline)
+                }
 
+                Text(simpleInsight)
+                    .font(.subheadline)
+                    .foregroundColor(.primary)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding()
+            .background(Color.white.opacity(0.9))
+            .cornerRadius(16)
+        }
+    
     private var calendarHeatmapCard: some View {
         VStack(alignment: .leading, spacing: 12) {
             HStack {
                 Image(systemName: "calendar")
-                    .foregroundColor(.purple)
+                    .foregroundColor(.indigo)
                 Text(monthTitle)
                     .font(.headline)
                 Spacer()
@@ -221,7 +266,7 @@ struct AnalyticsView: View {
 
                         Text("\(day)")
                             .font(.caption2.weight(.semibold))
-                            .foregroundColor(count > 0 ? .purple : .secondary)
+                            .foregroundColor(count > 0 ? .indigo : .secondary)
                             .frame(height: 28)
                             .frame(maxWidth: .infinity)
                             .background(dayColor(for: count))
@@ -241,7 +286,7 @@ struct AnalyticsView: View {
     private func dayColor(for count: Int) -> Color {
         guard count > 0 else { return Color.white.opacity(0.45) }
         let intensity = Double(count) / Double(maxCompletionsInMonth)
-        return Color.purple.opacity(0.2 + (0.55 * intensity))
+        return Color.indigo.opacity(0.2 + (0.55 * intensity))
     }
 }
 

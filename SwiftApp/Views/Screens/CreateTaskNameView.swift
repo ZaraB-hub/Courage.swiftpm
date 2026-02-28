@@ -5,7 +5,7 @@ struct CreateTaskNameView: View {
 
     @Bindable var viewModel: AddTaskViewModel
     var onFlowFinished: (() -> Void)? = nil
-    @Environment(\.dismiss) private var dismiss //built in dismiss fj from swift and store it from swift
+    @Environment(\.dismiss) private var dismiss //built in dismiss fj 
 
     var body: some View {
         ZStack {

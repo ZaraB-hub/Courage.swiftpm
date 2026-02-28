@@ -44,7 +44,7 @@ struct AnxietyView: View {
 
                     Text("\(Int(viewModel.anxiety))")
                         .font(.system(size: 48, weight: .bold))
-                        .foregroundColor(.purple)
+                        .foregroundColor(.indigo)
                         .animation(.spring(response: 0.22, dampingFraction: 0.85), value: viewModel.anxiety)
                 }
 

@@ -25,7 +25,7 @@ struct StepView: View {
                         .foregroundColor(.secondary)
 
                     ProgressView(value: Double(shownStep), total: Double(total))
-                        .tint(.purple)
+                        .tint(.indigo)
                         .frame(maxWidth: .infinity)
                 }
 
@@ -68,7 +68,6 @@ struct StepView: View {
 
                     
                     Button {
-                        AppHaptics.warning()
                         withAnimation(.spring(response: 0.32, dampingFraction: 0.85)) {
                             viewModel.tooHard()
                         }
@@ -81,7 +80,6 @@ struct StepView: View {
                 .padding(.bottom, 32)
 
                 Button {
-                    AppHaptics.warning()
                     onCancelToHome?()
                 } label: {
                     Text("×  Can't do this now")

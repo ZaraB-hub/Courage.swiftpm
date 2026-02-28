@@ -17,7 +17,6 @@ public final class InsightService {
         self.repository = repository
     }
     
-    // average anxiety reduction across all completed tasks
     public func averageAnxietyReduction() -> Double? {
         let completed = repository.fetchCompleted()
         let reductions = completed.compactMap { $0.anxietyReduction }
@@ -25,7 +24,6 @@ public final class InsightService {
         return Double(reductions.reduce(0, +)) / Double(reductions.count)
     }
     
-    // total steps completed across everything
     public func totalStepsCompleted() -> Int {
         repository.fetchCompleted()
             .flatMap { $0.steps }
@@ -37,13 +35,11 @@ public final class InsightService {
         repository.fetchCompleted().count
     }
     
-    // hardest task ever attempted 
     public func hardestTaskCompleted() -> Task? {
         repository.fetchCompleted()
             .max(by: { $0.anxietyBefore < $1.anxietyBefore })
     }
     
-    // best task — biggest anxiety reduction
     public func bestTask() -> Task? {
         repository.fetchCompleted()
             .compactMap { task -> (Task, Int)? in
